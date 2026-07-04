@@ -48,3 +48,14 @@ if r2 >= 0.70:
     print("\nModel disimpan sebagai slr_model.pkl")
 else:
     print("\nModel belum memenuhi threshold R² ≥ 0.70, tidak disimpan.")
+
+# ── 5. Export data untuk chart (dipakai chart.py secara lokal) ─────
+df.to_csv("training_data.csv", index=False)
+
+# Export test predictions untuk regression line di chart
+test_df = X_test.copy()
+test_df["actual"] = y_test.values
+test_df["predicted"] = y_pred
+test_df.to_csv("test_predictions.csv", index=False)
+
+print("Data diekspor: training_data.csv, test_predictions.csv")

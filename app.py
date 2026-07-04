@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import joblib
 import numpy as np
+import pandas as pd
 
 app = Flask(__name__)
 CORS(app)
@@ -22,7 +23,7 @@ def predict():
     if target_clicks <= 0:
         return jsonify({"error": "Jumlah klik harus lebih dari 0"}), 400
 
-    predicted = model.predict([[target_clicks]])[0]
+    predicted = model.predict(pd.DataFrame({"clicks": [target_clicks]}))[0]
     predicted = max(0, int(round(predicted)))
 
     return jsonify(
@@ -30,7 +31,7 @@ def predict():
             "target_clicks": target_clicks,
             "estimated_purchases": predicted,
             "conversion_rate": f"{(predicted / target_clicks * 100):.1f}%",
-        }
+        }   
     )
 
 

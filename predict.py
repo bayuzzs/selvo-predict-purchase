@@ -1,12 +1,13 @@
 import joblib
 import numpy as np
+import pandas as pd
 
 # Load model yang sudah disimpan
 model = joblib.load("slr_model.pkl")
 
 
 def predict_purchases(target_clicks: int) -> dict:
-    X = np.array([[target_clicks]])
+    X = pd.DataFrame({"clicks": [target_clicks]})
     predicted = model.predict(X)[0]
     predicted = max(0, int(round(predicted)))
 
